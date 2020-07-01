@@ -12,9 +12,14 @@ def test_example(selenium, url):
     selenium.get_screenshot_as_file('screenshots/example.png')
 
 
-@pytest.mark.xfail
-def test_example_import_error(selenium, url):
-    selenium.get(url('apps/apps/app/example-import-error.ipynb'))
+def test_tests_notebook(selenium, url):  #  backend tests
+    selenium.get(url('apps/apps/app/tests.ipynb'))
     selenium.find_element(By.ID, 'ipython-main-app')
     selenium.find_element(By.ID, 'notebook-container')
-    selenium.find_element(By.CLASS_NAME, 'jupyter-widgets-view')
+    output = selenium.find_element(By.CSS_SELECTOR, '.output_area')
+    print(output.text)
+    assert 'ModuleNotFoundError' not in test_output.text
+    test_output = selenium.find_element(By.CSS_SELECTOR, '.output_stdout')
+    # Print test output, which will be shown in case that tests failed.
+    print(test_output.text)
+    assert 'FAILURES' not in test_output.text
