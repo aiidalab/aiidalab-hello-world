@@ -1,7 +1,6 @@
 {
     "title": "Hello World App",
     "description": "This is an AiiDA lab hello world app created with the aiidalab-app-cutter.",
-    "version": "0.1",
     "authors": "The AiiDA lab Team",
     "logo": "img/logo.png",
     "state": "development"
