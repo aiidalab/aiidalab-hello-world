@@ -1,11 +1,11 @@
 # Hello World App
 
-This is an AiiDA lab hello world app created with the aiidalab-app-cutter.
+This is an AiiDAlab hello world app created with the aiidalab-app-cutter.
 
 ## Installation
 
 This jupyter-based app is intended to run in
-[AiiDA lab](https://www.materialscloud.org/aiidalab)
+[AiiDAlab](https://www.materialscloud.org/aiidalab)
 as well as inside the
 [Quantum Mobile](https://materialscloud.org/work/quantum-mobile) Virtual Machine.
 
