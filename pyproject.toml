@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.aiidalab]
+title = "Hello World App"
+
+# The "dev" dependency group is automatically synced by uv
+# and should thus contain all necessary deps for local development.
+# To install with pip run:
+# `pip install -e . --group dev`
+[dependency-groups]
+dev = [
+  "pytest~=9.2",
+  "pytest-docker==3.2.4",
+  "playwright~=1.64.1",
+  "pytest-playwright~=0.10.0",
+]
+
+[project]
+name = "aiidalab-hello-world"
+version = "0.1-alpha"
+authors = [{name = "The AiiDAlab Team", email = "name@example.com"}]
+description = "This is an AiiDAlab hello world app created with the aiidalab-app-cutter."
+
+requires-python = ">=3.12"
+dependencies = [
+    "aiidalab-widgets-base~=3.0.0",
+    "ipywidgets~=8.1"
+]
+
+readme = "README.md"
+license = 'MIT'
+license-files = ['LICENSE']
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 1 - Planning",
+    "Topic :: Scientific/Engineering",
+    "Framework :: AiiDA",
+]
+
+
+[project.urls]
+homepage = "https://github.com/aiidalab/aiidalab-hello-world"
+logo = "https://raw.githubusercontent.com/aiidalab/aiidalab-hello-world/main/img/logo.png"
+documentation = "https://github.com/aiidalab/aiidalab-hello-world/#readme"
+issues = "https://github.com/aiidalab/aiidalab-hello-world/issues"
+
+[tool.ruff]
+line-length = 88
