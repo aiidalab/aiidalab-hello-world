@@ -4,12 +4,16 @@ This is an AiiDAlab hello world app created with the aiidalab-app-cutter.
 
 ## Installation
 
-This jupyter-based app is intended to run in
-[AiiDAlab](https://www.materialscloud.org/aiidalab)
-as well as inside the
-[Quantum Mobile](https://materialscloud.org/work/quantum-mobile) Virtual Machine.
+This Jupyter-based app is intended to be run with [AiiDAlab](https://www.materialscloud.org/aiidalab).
 
-Use the App Store to install it.
+Assuming that the app was registered, you can install it directly via the app store in AiiDAlab or on the command line with:
+```
+aiidalab install hello-world
+```
+Otherwise, you can also install it directly from the repository:
+```
+aiidalab install hello-world@https://github.com/aiidalab/hello-world
+```
 
 ## Usage
 
@@ -21,4 +25,4 @@ MIT
 
 ## Contact
 
-simon.adorf@epfl.ch
+name@example.com

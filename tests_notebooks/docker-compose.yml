@@ -1,0 +1,14 @@
+---
+services:
+
+    aiidalab:
+        image: ghcr.io/aiidalab/full-stack:${TAG:-latest}
+        environment:
+            RMQHOST: messaging
+            SETUP_DEFAULT_AIIDA_PROFILE: 'true'
+            AIIDALAB_DEFAULT_APPS: ''
+            JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+        volumes:
+            - ..:/home/jovyan/apps/aiidalab-hello-world
+        ports:
+            - 8998:8888

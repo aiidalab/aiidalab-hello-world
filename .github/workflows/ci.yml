@@ -1,36 +1,85 @@
 ---
-# Run basic tests for this app on the latest aiidalab-docker image.
+name: CI
 
-name: continuous-integration
+on:
+    push:
+        branches:
+            - main
+    pull_request:
 
-on: [push]
+env:
+    FORCE_COLOR: "1"
 
 jobs:
 
-    test-app:
+    pre-commit:
 
         runs-on: ubuntu-latest
-        timeout-minutes: 10
+        timeout-minutes: 30
 
+        steps:
+            - uses: actions/checkout@v7
+            - uses: j178/prek-action@v3.1.0
+
+
+    unit-tests:
+
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
         strategy:
             matrix:
-                tag: [stable, latest]
-                browser: [chrome, firefox]
+                python-version: ['3.12', '3.13']
             fail-fast: false
 
         steps:
 
-            - name: Check out app
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v7
 
-            - name: Test app
-              uses: aiidalab/aiidalab-test-app-action@v2
+            - name: Set up uv
+              uses: astral-sh/setup-uv@v10.3.3
               with:
-                  image: aiidalab/aiidalab-docker-stack:${{ matrix.tag }}
-                  browser: ${{ matrix.browser }}
+                  python-version: ${{ matrix.python-version }}
+
+            - name: Run unit tests
+              run: uv run pytest tests/
+
+
+    notebook-tests:
+
+        strategy:
+            matrix:
+                browser: [chromium, firefox]
+                docker-tag: [latest]
+            fail-fast: false
+
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+
+        steps:
+
+            - name: Check out app
+              uses: actions/checkout@v7
+
+            - name: Setup uv
+              uses: astral-sh/setup-uv@v7
+              with:
+                  python-version: '3.12'
+
+            - name: Set jupyter token env
+              run: echo "JUPYTER_TOKEN=$(openssl rand -hex 32)" >> $GITHUB_ENV
+
+            - name: Install Playwright browser
+              run: uv run playwright install --with-deps ${{ matrix.browser }}
+
+            - name: Run notebook tests
+              run: uv run pytest -v --browser ${{ matrix.browser }} tests_notebooks/
+              env:
+                  TAG: ${{ matrix.docker-tag }}
 
             - name: Upload screenshots as artifacts
-              uses: actions/upload-artifact@v2
+              if: always()
+              uses: actions/upload-artifact@v7
               with:
-                  name: Screenshots-${{ matrix.tag }}-${{ matrix.browser }}
+                  name: Screenshots-${{ matrix.docker-tag }}-${{ matrix.browser }}
                   path: screenshots/
+                  if-no-files-found: error
