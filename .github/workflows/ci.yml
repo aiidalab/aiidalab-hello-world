@@ -49,7 +49,7 @@ jobs:
         strategy:
             matrix:
                 browser: [chromium, firefox]
-                docker-tag: [edge]
+                docker-tag: [latest]
             fail-fast: false
 
         runs-on: ubuntu-latest
